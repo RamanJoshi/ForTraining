@@ -39,7 +39,8 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${albumInstanceCount ?: 0}" />
+				<g:paginate prev="Back" next="Forward" total="${10}" />
+
 			</div>
 		</div>
 	</body>

@@ -6,7 +6,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.gorm.DetachedCriteria
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 class AlbumController {
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -129,8 +129,33 @@ class AlbumController {
 		}
 		
 		log.debug " rock Albums " + rockAlbums
-		def list = albums.findAll { it.name == "Raman" }
-		log.debug "it is list " + list
+		def query1 = Album.where { name == "Raman" }
+		def results = query1.list()
+		log.debug "it is list " + results
+		
+		def rockAlbums1 = Album.findAll { name =~ "%sha%" }
+		def undertow = Album.find { name == "Hemant Sharma" }
+		log.debug "it is rockAlbums1 " + rockAlbums1
+		log.debug "it is undertow " + undertow
+		
+		def allAlbums = Album.findAll('from com.test.Album')
+		log.debug "it is allAlbums " + allAlbums
+		
+		
+		def album1 = Album.get(1)
+		album1.name = "The Changed Title"
+		//album1.save()
+		def album2 = new Album(name : "Yogesh" )
+		//album2.save(flush : true)
+		
+		
+		def album = Album.get(1)
+		album.name = "Change It"
+		def otherAlbums = Album.findAllWhere(name : "Raman")
+		//assert otherAlbums.contains(album)
+		log.debug "showing otherAlbums " + otherAlbums
+		
+		
 		render "showing" 
 
 	}
